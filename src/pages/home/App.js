@@ -7,14 +7,34 @@ import './App.css'
 import React from 'react'
 
 
+// class Component{
+//   constructor(){
+//     this.state = {
+//       fun: function add(){
+        
+//       }
+//     };
+//     this.setState = () => {
+//       console.log("something")
+//     };
+//   }
+//   componentDidMount(){
 
+//   }
+//   render(){
 
+//   }
+// }
+
+// Parent Component
 class App extends React.Component{
  /**Step 1 */
  constructor(){
+  
     super()
     this.state = {
-      users: []
+      users: [],
+      searchValue:''
     }
   }
   /**Step 4 */
@@ -31,21 +51,29 @@ class App extends React.Component{
     )
   }
 
+  // for Onchange Function in Search
+  handleOnChange = (event) => {
+    this.setState({searchValue:event.target.value})
+  }
+  // let array = [1,2,3,4,5]
+  // array.filter((value) => value = '')
+  // [1,2,3,4,5]
   /**Step 2 */
   render(){
+    const {users,searchValue } = this.state
+    const filteredMonsters = users.filter(
+      monster => monster.name.toLowerCase().includes(searchValue.toLowerCase())
+    )
     /**Step 3 */
     return(
       <div className="App">
         <h1>Monsters Rollodex</h1>
-        <Search />
-        <CardList monsters={this.state.users}/>
-        <p>{this.state.users.map(element => element.name)}</p>
+        <Search changing = {this.handleOnChange}/>
+        <CardList monsters={filteredMonsters}/>
       </div>
     )
   }
 }
-
-
 
 export default App
 
